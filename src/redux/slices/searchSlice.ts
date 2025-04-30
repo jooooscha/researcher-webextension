@@ -1,7 +1,7 @@
 import type { SearchHit } from '@elastic/elasticsearch/api/types';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 import { getSearchTotalHits } from 'src/libs/elasticsearch';
 import { ElasticSearchApi } from 'src/redux/services/elasticsearch/api';

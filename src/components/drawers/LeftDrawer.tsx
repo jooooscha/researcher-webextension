@@ -21,7 +21,7 @@ import {
   Rating,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import BrandMenuLogo from 'src/components/drawers/BrandMenuLogo';
 import IconList from 'src/components/drawers/list_group/IconList';
@@ -53,7 +53,7 @@ function LeftDrawer({
   onClose,
 }: Props): JSX.Element {
   const { t } = useTranslation();
-  const history = useHistory<SearchMode>();
+  const history = useNavigate<SearchMode>();
   const [openStars, setOpenStars] = useState(true);
 
   const handleToggleStarMenu = () => {

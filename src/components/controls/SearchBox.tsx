@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, Paper, InputBase, Divider } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ROUTE_SEARCH } from 'src/constants';
 import type { SearchMode } from 'src/types';
@@ -16,7 +16,7 @@ SearchBox.defaultProps = {
 };
 
 function SearchBox({ autoFocus }: Props): JSX.Element {
-  const history = useHistory<SearchMode>();
+  const history = useNavigate<SearchMode>();
   const [keywords, setKeywords] = useState<string>('');
 
   function requestSubmit(e: React.FormEvent<HTMLDivElement>): void {

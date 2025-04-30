@@ -1,6 +1,6 @@
 import { ArrowBack, ArrowForward, Search } from '@mui/icons-material';
 import { Box, IconButton, useTheme, useMediaQuery } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useToggle from 'react-use/lib/useToggle';
 
 import FlexBox from 'src/components/atoms/FlexBox';
@@ -18,7 +18,7 @@ function NavBar({ onMenuIconClick }: Props): JSX.Element {
   const theme = useTheme();
   const isDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [isSearchFieldOpen, toggleSearchField] = useToggle(false);
-  const history = useHistory();
+  const history = useNavigate();
 
   if (isSearchFieldOpen && isDownSM) {
     return (

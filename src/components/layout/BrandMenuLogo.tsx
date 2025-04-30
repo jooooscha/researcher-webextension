@@ -1,6 +1,6 @@
 import { Menu } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import LogoSmall from './LogoSmall';
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 function BrandMenuLogo({ onMenuIconClick }: Props): JSX.Element {
-  const history = useHistory();
+  const history = useNavigate();
 
   return (
     <Box alignItems="center" display="flex">

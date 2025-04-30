@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import { Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import SmallSidebarItem from './SmallSidebarItem';
 
@@ -28,7 +28,7 @@ type Props = {
 
 function SmallSidebar({ open }: Props): JSX.Element {
   const { t } = useTranslation();
-  const history = useHistory<SearchMode>();
+  const history = useNavigate<SearchMode>();
 
   if (open) {
     return (

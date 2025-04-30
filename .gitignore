@@ -9,3 +9,13 @@ components.d.ts
 .idea/
 *.log
 extension/manifest.json
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
