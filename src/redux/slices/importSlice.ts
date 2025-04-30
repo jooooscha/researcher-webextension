@@ -98,6 +98,7 @@ const importSlice = createSlice({
       }
     },
     toggleNodeChecked(state, action: PayloadAction<string>) {
+      console.log("toggleNodeChecked", state);
       if (state.browserBookmarks) {
         const id = action.payload;
         const tree = new TreeModel().parse<BrowserBookmarksType>(state.browserBookmarks);

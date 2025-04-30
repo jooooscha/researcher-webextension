@@ -2,76 +2,77 @@ import { forwardRef } from 'react';
 import { JSX } from "react";
 
 import { ChevronRight, ExpandMore } from '@mui/icons-material';
-import type { TreeItemContentProps, TreeItemProps } from '@mui/x-tree-view';
-import { TreeItem, useTreeItem } from '@mui/x-tree-view';
-import { Typography } from '@mui/material';
-import clsx from 'clsx';
+import type { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
+import { TreeItem } from '@mui/x-tree-view/TreeItem';
+// import { Typography } from '@mui/material';
+// import clsx from 'clsx';
 
 import FlexBox from 'src/components/atoms/FlexBox';
 import TreeItemLabel from 'src/components/import/TreeItemLabel';
-import { toggleNodeChecked } from 'src/redux/slices/importSlice';
-import { useAppDispatch } from 'src/redux/store';
+// import { toggleNodeChecked } from 'src/redux/slices/importSlice';
+// import { useAppDispatch } from 'src/redux/store';
 import type { BrowserBookmarksType } from 'src/types';
 
-const CustomContent = forwardRef((props: TreeItemContentProps, ref) => {
-  const {
-    classes,
-    className,
-    label,
-    nodeId,
-    icon: iconProp,
-    expansionIcon,
-    displayIcon,
-  } = props;
+const CustomContent = forwardRef((props, ref) => {
+  // const {
+  //   classes,
+  //   className,
+  //   label,
+  //   nodeId,
+  //   icon: iconProp,
+  //   expansionIcon,
+  //   displayIcon,
+  // } = props;
 
-  const {
-      status: {
-        disabled,
-        expanded,
-        selected,
-        focused,
-        handleExpansion,
-        handleSelection,
-        preventSelection,
-      },
-  } = useTreeItem(nodeId);
+  // const {
+  //     status: {
+  //       disabled,
+  //       expanded,
+  //       selected,
+  //       focused,
+  //       handleExpansion,
+  //       handleSelection,
+  //       preventSelection,
+  //     },
+  // } = useTreeItem(nodeId);
 
-  const icon = iconProp || expansionIcon || displayIcon;
+  // const icon = iconProp || expansionIcon || displayIcon;
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    preventSelection(event);
-  };
+  // const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   preventSelection(event);
+  // };
 
-  const handleExpansionClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    handleExpansion(event);
-  };
+  // const handleExpansionClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   handleExpansion(event);
+  // };
 
-  const handleSelectionClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    handleSelection(event);
-    dispatch(toggleNodeChecked(nodeId));
-  };
+  // const handleSelectionClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   handleSelection(event);
+  //   dispatch(toggleNodeChecked(nodeId));
+  // };
+      // className={clsx(className, classes.root, {
+      //   [classes.expanded]: expanded,
+      //   [classes.selected]: selected,
+      //   [classes.focused]: focused,
+      //   [classes.disabled]: disabled,
+      // })}
+      // onMouseDown={handleMouseDown}
+      // ref={ref as React.Ref<HTMLDivElement>}>
+      // <div onClick={handleExpansionClick} className={classes.iconContainer}>
+      //   {icon}
+      // </div>
+      // <Typography
+      //   onClick={handleSelectionClick}
+      //   component="div"
+      //   className={classes.label}>
+      //   {label}
+      // </Typography>
 
   return (
-    <div
-      className={clsx(className, classes.root, {
-        [classes.expanded]: expanded,
-        [classes.selected]: selected,
-        [classes.focused]: focused,
-        [classes.disabled]: disabled,
-      })}
-      onMouseDown={handleMouseDown}
-      ref={ref as React.Ref<HTMLDivElement>}>
-      <div onClick={handleExpansionClick} className={classes.iconContainer}>
-        {icon}
-      </div>
-      <Typography
-        onClick={handleSelectionClick}
-        component="div"
-        className={classes.label}>
-        {label}
-      </Typography>
+    <div>
+    {label}
     </div>
   );
 });
@@ -106,13 +107,6 @@ const MyTreeItem = ({ node }: Props): JSX.Element => {
         </FlexBox>
       }
       label={<TreeItemLabel node={node} />}>
-      {Array.isArray(node.children) ? (
-        node.children.map((node) => {
-          return <MyTreeItem key={node.id} node={node} />;
-        })
-      ) : (
-        <></>
-      )}
     </CustomTreeItem>
   );
 };
