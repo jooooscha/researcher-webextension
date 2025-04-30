@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, JSX } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 

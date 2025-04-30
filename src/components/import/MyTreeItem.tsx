@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
+import { JSX } from "react";
 
 import { ChevronRight, ExpandMore } from '@mui/icons-material';
-import type { TreeItemContentProps, TreeItemProps } from '@mui/lab';
-import { TreeItem, useTreeItem } from '@mui/lab';
+import type { TreeItemContentProps, TreeItemProps } from '@mui/x-tree-view';
+import { TreeItem, useTreeItem } from '@mui/x-tree-view';
 import { Typography } from '@mui/material';
 import clsx from 'clsx';
 
@@ -24,13 +25,15 @@ const CustomContent = forwardRef((props: TreeItemContentProps, ref) => {
   } = props;
 
   const {
-    disabled,
-    expanded,
-    selected,
-    focused,
-    handleExpansion,
-    handleSelection,
-    preventSelection,
+      status: {
+        disabled,
+        expanded,
+        selected,
+        focused,
+        handleExpansion,
+        handleSelection,
+        preventSelection,
+      },
   } = useTreeItem(nodeId);
 
   const icon = iconProp || expansionIcon || displayIcon;

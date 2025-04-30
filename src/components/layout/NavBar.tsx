@@ -2,6 +2,7 @@ import { ArrowBack, ArrowForward, Search } from '@mui/icons-material';
 import { Box, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useToggle from 'react-use/lib/useToggle';
+import { JSX } from "react";
 
 import FlexBox from 'src/components/atoms/FlexBox';
 import LanguageSwitcher from 'src/components/controls/LanguageSwitcher';
@@ -18,7 +19,7 @@ function NavBar({ onMenuIconClick }: Props): JSX.Element {
   const theme = useTheme();
   const isDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [isSearchFieldOpen, toggleSearchField] = useToggle(false);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   if (isSearchFieldOpen && isDownSM) {
     return (
@@ -97,12 +98,12 @@ function NavBar({ onMenuIconClick }: Props): JSX.Element {
           </Box>
 
           <FlexBox sx={{ mr: '1px' }}>
-            <IconButton>
-              <ArrowBack onClick={() => history.goBack()} />
+            <IconButton onClick={() => navigate(-1)}>
+              <ArrowBack />
             </IconButton>
 
-            <IconButton>
-              <ArrowForward onClick={() => history.goForward()} />
+            <IconButton onClick={() => navigate(1)}>
+              <ArrowForward />
             </IconButton>
           </FlexBox>
 

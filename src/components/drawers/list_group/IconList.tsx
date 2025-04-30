@@ -1,4 +1,5 @@
 import { ListItem, ListItemIcon } from '@mui/material';
+import { JSX } from "react";
 
 import TypographyText from 'src/components/atoms/TypographyText';
 import { LEFT_DRAWER_ICON_WIDTH } from 'src/constants';

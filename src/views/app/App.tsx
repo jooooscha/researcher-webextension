@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@mui/material';
+import { JSX } from "react";
 
 import EsCheck from 'src/components/app/EsCheck';
 import Routing from 'src/components/app/Routing';

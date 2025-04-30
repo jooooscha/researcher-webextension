@@ -61,7 +61,7 @@ function SearchResult({ hits, total }: Props): JSX.Element {
           if (item._source) {
             if (listViewType === 'column') {
               return (
-                <Grid key={item._source.url} lg={4} md={6} sm={12} xl={4} xs={12} item>
+                <Grid key={item._source.url} size={{ lg: 4, md: 6, sm: 12, xl: 4, xs: 12 }}>
                   <ColumnCard
                     id={item._id}
                     index={item._index}
@@ -71,19 +71,19 @@ function SearchResult({ hits, total }: Props): JSX.Element {
               );
             } else if (listViewType === 'headline') {
               return (
-                <Grid key={item._source.url} xs={12} item>
+                <Grid key={item._source.url} size={{ xs: 12 }}>
                   <HeadlineCard searchHit={item} showImage={false} />
                 </Grid>
               );
             } else if (listViewType === 'simple') {
               return (
-                <Grid key={item._source.url} xs={12} item>
+                <Grid key={item._source.url} size={{ xs: 12 }}>
                   <SimpleItem searchHit={item} />
                 </Grid>
               );
             } else if (listViewType === 'imageHeadline') {
               return (
-                <Grid key={item._source.url} xs={12} item>
+                <Grid key={item._source.url} size={{ xs: 12 }}>
                   <HeadlineCard searchHit={item} showImage={true} />
                 </Grid>
               );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, JSX } from 'react';
 
 import {
   ExpandLess,
@@ -53,7 +53,7 @@ function LeftDrawer({
   onClose,
 }: Props): JSX.Element {
   const { t } = useTranslation();
-  const history = useNavigate<SearchMode>();
+  const navigate = useNavigate();
   const [openStars, setOpenStars] = useState(true);
 
   const handleToggleStarMenu = () => {
@@ -61,7 +61,7 @@ function LeftDrawer({
   };
 
   const goToSearchByStars = (value: number) => {
-    history.push(ROUTE_SEARCH, { stars: value });
+    navigate(ROUTE_SEARCH, { state: { stars: value } });
   };
 
   return (
@@ -92,13 +92,13 @@ function LeftDrawer({
             <IconList
               headerText={t('Home')}
               icon={<Home />}
-              onClick={() => history.push(ROUTE_HOME)}
+              onClick={() => navigate(ROUTE_HOME)}
             />
 
             <IconList
               headerText={t('Read Later')}
               icon={<PushPin />}
-              onClick={() => history.push(ROUTE_SEARCH, { isReadLater: true })}
+              onClick={() => navigate(ROUTE_SEARCH, { state: { isReadLater: true } })}
             />
 
             <ListItemButton onClick={handleToggleStarMenu}>
@@ -126,19 +126,19 @@ function LeftDrawer({
             <IconList
               headerText={t('Videos')}
               icon={<VideoLibrary />}
-              onClick={() => history.push(ROUTE_SEARCH, { sites: VIDEO_SITES })}
+              onClick={() => navigate(ROUTE_SEARCH, { state: { sites: VIDEO_SITES } })}
             />
 
             <IconList
               headerText={t('Import')}
               icon={<ImportExport />}
-              onClick={() => history.push(ROUTE_IMPORT)}
+              onClick={() => navigate(ROUTE_IMPORT)}
             />
 
             <IconList
               headerText={t('Settings')}
               icon={<Settings />}
-              onClick={() => history.push(ROUTE_SETTINGS)}
+              onClick={() => navigate(ROUTE_SETTINGS)}
             />
           </List>
         </Box>

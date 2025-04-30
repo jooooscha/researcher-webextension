@@ -1,6 +1,7 @@
-import { TreeView as MuiTreeView } from '@mui/lab';
+import { SimpleTreeView as MuiTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { useEffectOnce } from 'react-use';
 import browser from 'webextension-polyfill';
+import { JSX } from "react";
 
 import MyTreeItem from 'src/components/import/MyTreeItem';
 import { setBrowserBookmarks } from 'src/redux/slices/importSlice';
@@ -20,9 +21,9 @@ function BrowserBookmarksTreeView(): JSX.Element {
     }
   });
 
-  const handleSelect = (event: React.ChangeEvent<unknown>, _nodeId: string) => {
-    event.preventDefault();
-  };
+  // const handleSelect = (event: React.ChangeEvent<unknown>, _nodeId: string) => {
+  //   event.preventDefault();
+  // };
 
   if (browserBookmarks == null) {
     return <></>;
@@ -40,8 +41,7 @@ function BrowserBookmarksTreeView(): JSX.Element {
         WebkitUserSelect: 'none',
         WebkitTouchCallout: 'none',
       }}
-      defaultExpanded={[browserBookmarks.id]}
-      onNodeSelect={handleSelect}>
+      defaultExpandedItems={[browserBookmarks.id]}>
       <MyTreeItem node={browserBookmarks} />
     </MuiTreeView>
   );

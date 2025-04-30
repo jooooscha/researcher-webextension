@@ -1,6 +1,6 @@
 import { createRef } from 'preact';
 
-import { useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback, useMemo, JSX } from 'react';
 
 import { Search } from '@mui/icons-material';
 import { Container, Box } from '@mui/material';
@@ -32,9 +32,9 @@ import type { SearchMode } from 'src/types';
 function SearchPage(): JSX.Element {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const location = useLocation<SearchMode>();
+  const location = useLocation();
   const searchMode: SearchMode = useMemo(
-    () => (location.state ? location.state : { keywords: '' }),
+    () => (location.state ? location.state as SearchMode : { keywords: '' }),
     [location],
   );
   const { searchHits, totalHits, isInitialized, hasMore, isLoading, error } =
