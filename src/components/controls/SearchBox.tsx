@@ -16,12 +16,12 @@ SearchBox.defaultProps = {
 };
 
 function SearchBox({ autoFocus }: Props): JSX.Element {
-  const history = useNavigate<SearchMode>();
+  const navigate = useNavigate();
   const [keywords, setKeywords] = useState<string>('');
 
   function requestSubmit(e: React.FormEvent<HTMLDivElement>): void {
     e.preventDefault();
-    history.push(ROUTE_SEARCH, { keywords });
+    navigate(ROUTE_SEARCH, { state: { keywords } });
   }
 
   return (
