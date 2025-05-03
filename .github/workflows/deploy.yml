@@ -1,0 +1,62 @@
+name: "Build and sign RE:SEARCHER"
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sign:
+    name: "Release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build the addon
+        run: pnpm build
+
+      - name: Zip the extension
+        run: |
+          mkdir -p dist
+          cd extension  # replace with your actual build folder
+          zip -r ../dist/researcher_extension.zip .
+
+      - name: "web-ext sign"
+        id: web-ext-sign
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: sign
+          source: dist/extension.zip
+          channel: unlisted
+          apiKey: ${{ secrets.FF_JWT_ISSUER }}
+          apiSecret: ${{ secrets.FF_JWT_SECRET }}
+          timeout: 1800000
+
+      - name: "Create Release"
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: dist/researcher_extension.zip
+      #
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: researcher_addon
+          path: dist/researcher_extension.zip
