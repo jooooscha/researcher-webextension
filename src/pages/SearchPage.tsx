@@ -15,6 +15,7 @@ import DeleteDialog from 'src/components/dialogs/DeleteDialog';
 import ReadableDialog from 'src/components/readable/ReadableDialog';
 import PinnedReadLater from 'src/components/search/PinnedReadLater';
 import SearchResult from 'src/components/search/SearchResult';
+import BackgroundTask from 'src/components/import/BackgroundTask';
 import { SEARCH_RESULTS_SHOULD_UPDATE } from 'src/constants';
 import { useInfiniteLoad } from 'src/hooks/useInfiniteLoad';
 import { scrollToTop } from 'src/libs/utils';
@@ -26,8 +27,9 @@ import {
   resetSearchCacheAndHits,
   resetSearchHits,
 } from 'src/redux/slices/searchSlice';
-import { useAppDispatch, useAppSelector } from 'src/redux/store';
+import { persistor, useAppDispatch, useAppSelector } from 'src/redux/store';
 import type { SearchMode } from 'src/types';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function SearchPage(): JSX.Element {
   const { t } = useTranslation();
@@ -94,6 +96,9 @@ function SearchPage(): JSX.Element {
       )}
       {isInitialized && searchHits.length > 0 && (
         <Box>
+          <PersistGate loading={null} persistor={persistor}>
+            <BackgroundTask />
+          </PersistGate>
           <SearchResult hits={searchHits} total={totalHits} />
           <Box mt={1} />
           <div
