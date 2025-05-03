@@ -25,7 +25,6 @@ const toTreeItem = (item) => {
 function BrowserBookmarksTreeView(): JSX.Element {
   const dispatch = useAppDispatch();
   const browserBookmarks = useAppSelector((s) => s.import.browserBookmarks);
-  console.log("browserBookmarks:", browserBookmarks)
   const [selectionPropagation] =
     useState<TreeViewSelectionPropagation>({
       parents: true,
@@ -35,7 +34,6 @@ function BrowserBookmarksTreeView(): JSX.Element {
   useEffectOnce(() => {
     const getBookmarks = async () => {
       const bookmarks = await browser.bookmarks.getTree();
-      console.log("bookmarks:", bookmarks)
 
       dispatch(setBrowserBookmarks(bookmarks[0]));
     };
