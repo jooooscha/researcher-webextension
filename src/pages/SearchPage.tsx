@@ -96,9 +96,7 @@ function SearchPage(): JSX.Element {
       )}
       {isInitialized && searchHits.length > 0 && (
         <Box>
-          <PersistGate loading={null} persistor={persistor}>
-            <BackgroundTask />
-          </PersistGate>
+          <BackgroundTask />
           <SearchResult hits={searchHits} total={totalHits} />
           <Box mt={1} />
           <div

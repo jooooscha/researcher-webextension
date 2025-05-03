@@ -1,57 +1,49 @@
-// src/BackgroundTask.js
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import browser from 'webextension-polyfill';
 import {
   useCreateBookmarkMutation,
-  useDeleteBookmarkMutation,
   useUpdateBookmarkMutation,
 } from 'src/redux/services/elasticsearch/api';
 import { crawl } from 'src/libs/crawl';
 import { prepareBookmark } from 'src/libs/utils';
 
-const [esExistDoc, _setExistDoc] = useState<ElasticSearchDoc>(undefined);
 import { INDEX_NAME } from 'src/constants';
 import { ElasticSearchDoc } from 'src/types';
-
+import { getDocByUrl } from 'src/redux/slices/esConfigSlice';
+import { useAppDispatch } from 'src/redux/store';
 
 const BackgroundTask = () => {
   const [createBookmark, {}] = useCreateBookmarkMutation();
   const [updateBookmark, {}] = useUpdateBookmarkMutation();
-    useDeleteBookmarkMutation();
-  const [_isBookmarking, setIsBookmarking] = useState(false);
+  const dispatch = useAppDispatch();
+  type Bookmark = browser.Bookmarks.BookmarkTreeNode;
 
   const importBookmark = async (url: string) => {
-    console.log("url:", url)
-
-    // const [createBookmark, {}] = useCreateBookmarkMutation();
     try {
-      setIsBookmarking(true)
-
       const htmlText = await crawl(url);
 
       const bookmark = prepareBookmark(url, htmlText);
       bookmark.stars = 5;
       bookmark.isReadLater = false;
 
-      if (esExistDoc) {
+      const esDoc = await dispatch(getDocByUrl({ url })).unwrap();
+      if (esDoc) {
         await updateBookmark({
-          id: esExistDoc.id,
-          index: esExistDoc.index,
+          id: esDoc.id,
+          index: esDoc.index,
           body: { doc: bookmark },
         });
-        // await getElasticsearchDoc(targetUrl, 'update');
-        //sendSearchResultShouldUpdate();
-        console.log("Successful update")
+        console.log("Bookmark successfully updated")
       } else {
         await createBookmark({
           index: INDEX_NAME,
           body: bookmark,
           refresh: true, // ! must refresh
         });
-        console.log("Successful create")
+        console.log("Bookmark successfully created")
       }
     } catch (e) {
-      console.log("Error: ", e);
+      console.log("Could not update bookmark: ", e);
     }
   }
 
@@ -60,24 +52,26 @@ const BackgroundTask = () => {
       console.log('Running background task...');
 
       const bookmarks = await browser.bookmarks.getTree();
+      const otherBookmarks = bookmarks[0]?.children?.find(
+        (d): d is Bookmark => d.title === "Other Bookmarks" && Array.isArray(d.children)
+      );
 
-      try {
-        const b: Object[] =
-          bookmarks[0]?.children?.find(d => d.title == "Other Bookmarks")?.children?.find(d => d.title == "researcher");
 
-        // console.log("bookmarks:", b.children)
+      const researcher = otherBookmarks?.children?.find(
+        (d): d is Bookmark => d.title === "researcher" && Array.isArray(d.children)
+      );
 
-        // dispatch(setBrowserBookmarks(b.children));
-        importBookmark(b.children[0].url)
-        console.log("dispatched: ", b.children[0])
-
-      } catch (e) {
-        console.log("Could not get bookmarks")
+      if (researcher && researcher.children && researcher.children[0]?.url) {
+        for (let bookmark of researcher.children) {
+          if (bookmark.url) {
+            importBookmark(bookmark.url);
+          }
+        }
+      } else {
+        console.warn("Could not find valid researcher bookmark or URL.");
       }
 
-
-    // }, 1000 * 60 * 60); // once per hour
-    }, 1000 * 5); // once per hour
+    }, 60 * 60 * 1000); // once per hour
 
     return () => clearInterval(intervalId);
   }, []);
@@ -86,4 +80,3 @@ const BackgroundTask = () => {
 };
 
 export default BackgroundTask;
-
