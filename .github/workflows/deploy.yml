@@ -29,18 +29,25 @@ jobs:
       - name: Build the addon
         run: pnpm build
 
-      - name: Zip the extension
-        run: |
-          mkdir -p dist
-          cd extension  # replace with your actual build folder
-          zip -r ../dist/researcher_extension.zip .
+      # - name: Zip the extension
+      #   run: |
+      #     mkdir -p dist
+      #     cd extension  # replace with your actual build folder
+      #     zip -r ../dist/researcher_extension.zip .
+
+      - name: "web-ext build"
+        id: web-ext-build
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: build
+          source: ./extension
 
       - name: "web-ext sign"
         id: web-ext-sign
         uses: kewisch/action-web-ext@v1
         with:
           cmd: sign
-          source: dist/extension.zip
+          source: ${{ steps.web-ext-build.outputs.target }}
           channel: unlisted
           apiKey: ${{ secrets.FF_JWT_ISSUER }}
           apiSecret: ${{ secrets.FF_JWT_SECRET }}
@@ -49,12 +56,6 @@ jobs:
       - name: "Create Release"
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: dist/researcher_extension.zip
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: researcher_addon
-          path: dist/researcher_extension.zip
+          files: ${{ steps.web-ext-sign.outputs.target }}
