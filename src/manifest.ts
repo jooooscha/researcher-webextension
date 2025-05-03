@@ -10,7 +10,7 @@ export async function getManifest(): Promise<Manifest.WebExtensionManifest> {
     description: pkg.description,
     browser_specific_settings: {
       gecko: {
-        id: "s7df89sdf7s98df",
+        id: "researcher_extension@eralgray.click",
         strict_min_version: "42.0"
       }
     },
