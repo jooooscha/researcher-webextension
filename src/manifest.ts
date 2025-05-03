@@ -8,6 +8,12 @@ export async function getManifest(): Promise<Manifest.WebExtensionManifest> {
     name: pkg.displayName || pkg.name,
     version: pkg.version,
     description: pkg.description,
+    browser_specific_settings: {
+      gecko: {
+        id: "s7df89sdf7s98df",
+        strict_min_version: "42.0"
+      }
+    },
     browser_action: {
       default_icon: {
         16: './public/icon-16.png',
