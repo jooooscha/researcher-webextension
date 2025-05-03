@@ -8,7 +8,6 @@ import { crawl } from 'src/libs/crawl';
 import { prepareBookmark } from 'src/libs/utils';
 
 import { INDEX_NAME } from 'src/constants';
-import { ElasticSearchDoc } from 'src/types';
 import { getDocByUrl } from 'src/redux/slices/esConfigSlice';
 import { useAppDispatch } from 'src/redux/store';
 
