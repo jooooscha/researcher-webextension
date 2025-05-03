@@ -11,7 +11,7 @@ type Props = {
 };
 
 function BrandMenuLogo({ onMenuIconClick }: Props): JSX.Element {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Box alignItems="center" display="flex">
@@ -27,7 +27,7 @@ function BrandMenuLogo({ onMenuIconClick }: Props): JSX.Element {
               backgroundColor: 'transparent',
             },
           }}
-          onClick={() => history.push(ROUTE_HOME)}>
+          onClick={() => navigate(ROUTE_HOME)}>
           <FlexBox alignItems="center">
             <Box mr={0.5} />
             <Typography sx={{ fontSize: 14, fontWeight: 500, color: grey[700] }}>

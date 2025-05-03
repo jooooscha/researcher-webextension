@@ -28,7 +28,7 @@ type Props = {
 
 function SmallSidebar({ open }: Props): JSX.Element {
   const { t } = useTranslation();
-  const history = useNavigate<SearchMode>();
+  const navigate = useNavigate();
 
   if (open) {
     return (
@@ -44,32 +44,32 @@ function SmallSidebar({ open }: Props): JSX.Element {
         <SmallSidebarItem
           icon={<Home />}
           text={t('Home')}
-          onClick={() => history.push(ROUTE_HOME)}
+          onClick={() => navigate(ROUTE_HOME)}
         />
         <SmallSidebarItem
           icon={<PushPin />}
           text={t('Read Later')}
-          onClick={() => history.push(ROUTE_SEARCH, { isReadLater: true })}
+          onClick={() => navigate(ROUTE_SEARCH, { state: { isReadLater: true } })}
         />
         <SmallSidebarItem
           icon={<StarBorder />}
           text={t('Stars')}
-          onClick={() => history.push(ROUTE_SEARCH, { stars: 5 })}
+          onClick={() => navigate(ROUTE_SEARCH, { state: { stars: 5 } })}
         />
         <SmallSidebarItem
           icon={<VideoLibrary />}
           text={t('Videos')}
-          onClick={() => history.push(ROUTE_SEARCH, { sites: VIDEO_SITES })}
+          onClick={() => navigate(ROUTE_SEARCH, { state: { sites: VIDEO_SITES } })}
         />
         <SmallSidebarItem
           icon={<ImportExport />}
           text={t('Import')}
-          onClick={() => history.push(ROUTE_IMPORT)}
+          onClick={() => navigate(ROUTE_IMPORT)}
         />
         <SmallSidebarItem
           icon={<Settings />}
           text={t('Settings')}
-          onClick={() => history.push(ROUTE_SETTINGS)}
+          onClick={() => navigate(ROUTE_SETTINGS)}
         />
       </Container>
     );
