@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import BackgroundTask from 'src/components/import/BackgroundTask';
 import { CancelOutlined, Star } from '@mui/icons-material';
 import type { AlertColor } from '@mui/material';
 import {
@@ -259,6 +260,7 @@ const Popup = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={theme}>
+      <BackgroundTask />
       <CssBaseline />
       <PopupAppBar />
       <PopupEsCheck>

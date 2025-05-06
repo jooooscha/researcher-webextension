@@ -27,12 +27,13 @@ const BackgroundTask = () => {
 
       const esDoc = await dispatch(getDocByUrl({ url })).unwrap();
       if (esDoc) {
-        await updateBookmark({
+        /* await updateBookmark({
           id: esDoc.id,
           index: esDoc.index,
           body: { doc: bookmark },
         });
         console.log("Bookmark successfully updated")
+        */
       } else {
         await createBookmark({
           index: INDEX_NAME,
@@ -46,8 +47,7 @@ const BackgroundTask = () => {
     }
   }
 
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
+  const backgroundTask = async () => {
       console.log('Running background task...');
 
       const bookmarks = await browser.bookmarks.getTree();
@@ -69,8 +69,18 @@ const BackgroundTask = () => {
       } else {
         console.warn("Could not find valid researcher bookmark or URL.");
       }
+  }
+  useEffect(() => {
+    const timer = 5 * 60 * 1000;
 
-    }, 60 * 60 * 1000); // once per hour
+    backgroundTask()
+
+    console.log('Starting background timer. Running in', timer/1000, "s");
+
+    const intervalId = setInterval(async () => {
+      await backgroundTask()
+    }, 5 * 60 * 1000); // once per hour
+
 
     return () => clearInterval(intervalId);
   }, []);
